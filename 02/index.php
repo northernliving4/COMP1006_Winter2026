@@ -1,7 +1,3 @@
-<?php
-require "connect.php"; 
-
-
 //1. Set Up & Start 
 
 
