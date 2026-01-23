@@ -1,0 +1,48 @@
+<?php
+
+
+
+$title = "My PHP Page";
+$items = ["Home", "About", "Contact"];
+
+
+function view($template, $data = []) {
+    extract($data);
+    eval("?>$template<?php ");
+}
+
+
+$header = <<<HTML
+<!DOCTYPE html>
+<html>
+<head>
+    <title><?= \$title ?></title>
+</head>
+<body>
+HTML;
+
+$menu = <<<HTML
+<ul>
+<?php foreach (\$items as \$item): ?>
+    <li><?= htmlspecialchars(\$item) ?></li>
+<?php endforeach; ?>
+</ul>
+HTML;
+
+$footer = <<<HTML
+<footer>
+    <p>&copy; <?= date("Y") ?></p>
+</footer>
+</body>
+</html>
+HTML;
+
+?>
+
+<?php view($header, compact("title")); ?>
+
+<h1>Welcome</h1>
+
+<?php view($menu, compact("items")); ?>
+
+<?php view($footer); ?>
