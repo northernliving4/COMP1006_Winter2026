@@ -7,8 +7,8 @@
     <!-- Step One - Add Client Side Validation with HTML Attributes -->
     <fieldset>
       <legend>Customer Information</legend>
-        <label for="first_name">First name</label>
-        <input type="text" id="first_name" name="first_name">
+        <label for="first_name" class = "form-label" First name label>
+        <input type="text" id="first_name" name="first_name" class ="form-control">
         <label for="last_name">Last name</label>
         <input type="text" id="last_name" name="last_name">
         <label for="phone">Phone number</label>
@@ -95,14 +95,14 @@
       <legend>Additional Comments</legend>
 
       <p>
-        <label for="comments">Comments (optional)</label><br>
+        <label for="comments" class="form-label">Comments (optional)</label><br>
         <textarea id="comments" name="comments" rows="4"
           placeholder="Allergies, delivery instructions, custom messages..."></textarea>
       </p>
     </fieldset>
 
     <p>
-      <button type="submit">Place Order</button>
+      <button type="submit" class="btn btn-primary">Place Order</button>
     </p>
 
   </form>
