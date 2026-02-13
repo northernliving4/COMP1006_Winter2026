@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$dbname = "YOUR_DATABASE_NAME";
+$dbname = "form";
 $username = "root";
 $password = ""; // empty password
 
