@@ -1,16 +1,23 @@
 <?php
-require "includes/header.php";
-//  TODO: connect to the database 
+require "connect.php";   // make sure this path matches where your connect.php is
 
-//   TODO: Grab form data (no validation or sanitization for this lab)
+// Grab form data
+$first = $_POST['first_name'];
+$last = $_POST['last_name'];
+$email = $_POST['email'];
 
-/*
-  1. Write an INSERT statement with named placeholders
-  2. Prepare the statement
-  3. Execute the statement with an array of values
-  4.
+// INSERT query
+$sql = "INSERT INTO subscribers (first_name, last_name, email)
+        VALUES (:first_name, :last_name, :email)";
 
-*/
+$statement = $db->prepare($sql);
+
+$statement->execute([
+    ':first_name' => $first,
+    ':last_name'  => $last,
+    ':email'      => $email
+]);
+?>
 
 ?>
 <!DOCTYPE html>
