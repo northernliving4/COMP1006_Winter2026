@@ -42,6 +42,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Add Code Here 
 
+    //check if a file is uploaded 
+    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] 
+    !== UPLOAD_ERR_NO_FILE) {
+        //make sure the file upload completed successfully
+        if($_FILES['product_image']['error'] !==UPLOAD_ERR_OK) {
+            $errors[] = "There was a problem uploading the image!";
+        }
+        else{
+            //only allow common image file types
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            //detect the real MIME type of the uploaded file
+            $detectedType = mime_content_type($_FILES['product_image']['tmp_name']);
+            if(!in_array($detectedType, $allowedType, true)){
+                $errors[] = "Only JPG, PNG, WEBP and PNG are allowed";
+            }
+            else {
+                //get the file extension 
+                $extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
+                //create a unique file name so uploads dont overwrite eachother
+                $safeFileName = uniqid('product_', true) . '.' .strtolower($extension);
+                //build the full server path where the file will be stored
+                $destination = __DIR__ . 'uploads/' . $safeFileName;
+                //move the uploaded file from tempoary storage to the uploads folder
+                if(move_uploaded_file($_FILES['product_image']['tmp_name'], $destination)){
+                    $imagePath = 'uploads/' . $safeFileName; // This is the path that will be stored in the database    
+                }
+                else {
+                    $errors[] = "Failed to move uploaded file.";
+                }
+
+                }
+
+
+
+            }
+
+        }
+    }
+
+
     // If there are no errors, insert the product into the database
     if (empty($errors)) {
         $sql = "INSERT INTO products (name, description, price, image_path)
@@ -56,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $success = "Product added successfully!";
     }
-}
+
 ?>
 
 <main class="container mt-4">
@@ -122,4 +162,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </main>
 
-<?php require "footer.php"; ?>
+<?php require "includes/footer.php"; ?>
