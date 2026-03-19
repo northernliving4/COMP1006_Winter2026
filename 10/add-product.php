@@ -43,45 +43,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Add Code Here 
 
     //check if a file is uploaded 
-    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] 
-    !== UPLOAD_ERR_NO_FILE) {
-        //make sure the file upload completed successfully
-        if($_FILES['product_image']['error'] !==UPLOAD_ERR_OK) {
+    if (isset($_FILES['product_image']) && $_FILES['product_image']['error']  !== UPLOAD_ERR_NO_FILE) {
+        //make sure the file upload completed succesfully 
+        if ($_FILES['product_image']['error'] !== UPLOAD_ERR_OK) {
             $errors[] = "There was a problem uploading the image!";
-        }
-        else{
-            //only allow common image file types
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-            //detect the real MIME type of the uploaded file
+        } else {
+            //only allow common image file types 
+            $allowedType = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+            //detect the real MIME type of the uploaded file 
             $detectedType = mime_content_type($_FILES['product_image']['tmp_name']);
-            if(!in_array($detectedType, $allowedType, true)){
-                $errors[] = "Only JPG, PNG, WEBP and PNG are allowed";
-            }
-            else {
+            if (!in_array($detectedType, $allowedType, true)) {
+                $errors[] = "Only JPG, JPEG, WEBP and PNG are allowed";
+            } else {
                 //get the file extension 
                 $extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
-                //create a unique file name so uploads dont overwrite eachother
-                $safeFileName = uniqid('product_', true) . '.' .strtolower($extension);
-                //build the full server path where the file will be stored
-                $destination = __DIR__ . 'uploads/' . $safeFileName;
-                //move the uploaded file from tempoary storage to the uploads folder
-                if(move_uploaded_file($_FILES['product_image']['tmp_name'], $destination)){
-                    $imagePath = 'uploads/' . $safeFileName; // This is the path that will be stored in the database    
+                //create a unique filename so uploaded files don't overwrite each other 
+                $safeFilename = uniqid('product_', true) . '.' . strtolower($extension);
+                //build the full server path where the file will be stored 
+                $destination = __DIR__ . '/uploads/' . $safeFilename;
+                //move the uploaded file from temporary storage to the uploads folder
+                if (move_uploaded_file($_FILES['product_image']['tmp_name'], $destination)) {
+                    $imagePath = 'uploads/' . $safeFilename;
+                } else {
+                    $errors[] = "Image upload failed!";
                 }
-                else {
-                    $errors[] = "Failed to move uploaded file.";
-                }
-
-                }
-
-
-
             }
-
         }
     }
-
-
     // If there are no errors, insert the product into the database
     if (empty($errors)) {
         $sql = "INSERT INTO products (name, description, price, image_path)
@@ -96,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $success = "Product added successfully!";
     }
-
+}
 ?>
 
 <main class="container mt-4">
@@ -126,8 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             id="name"
             name="name"
             class="form-control mb-3"
-            required
-        >
+            required>
 
         <label for="description" class="form-label">Description</label>
         <textarea
@@ -135,8 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             name="description"
             class="form-control mb-3"
             rows="4"
-            required
-        ></textarea>
+            required></textarea>
 
         <label for="price" class="form-label">Price</label>
         <input
@@ -146,8 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             class="form-control mb-3"
             step="0.01"
             min="0"
-            required
-        >
+            required>
 
         <label for="product_image" class="form-label">Product Image</label>
         <input
@@ -155,8 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             id="product_image"
             name="product_image"
             class="form-control mb-4"
-            accept=".jpg,.jpeg,.png,.webp"
-        >
+            accept=".jpg,.jpeg,.png,.webp">
 
         <button type="submit" class="btn btn-primary">Add Product</button>
     </form>

@@ -1,3 +1,4 @@
+
 CREATE TABLE orders (
   customer_id INT AUTO_INCREMENT PRIMARY KEY,
 

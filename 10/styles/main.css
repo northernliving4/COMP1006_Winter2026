@@ -1,11 +1,15 @@
+/* ============================
+   Simple Reset / Base Styles
+   ============================ */
 
+/* Box sizing reset */
 *,
 *::before,
-::after {
+*::after {
     box-sizing: border-box;
 }
 
-
+/* Remove default margins */
 body,
 h1,
 h2,
@@ -16,14 +20,16 @@ legend {
     margin: 0;
 }
 
-Base body styles 
+/* Base body styles */
 body {
     line-height: 1.5;
     color: #222;
     background-color: #fafafa;
 }
 
-
+/* ============================
+   Layout
+   ============================ */
 
 main,
 header nav, 
@@ -33,7 +39,9 @@ footer {
     padding: 1.5rem;
 }
 
-
+/* ============================
+   Logo / Heading
+   ============================ */
 
 h1 {
     text-align: center;
@@ -45,7 +53,9 @@ h1 img {
     height: auto;
 }
 
-
+/* ============================
+   Form Elements
+   ============================ */
 
 fieldset {
     border: 1px solid #ddd;
@@ -83,7 +93,9 @@ textarea {
     resize: vertical;
 }
 
-
+/* ============================
+   Navigation
+   ============================ */
 
 nav {
     margin-bottom: 1.5rem;
@@ -112,6 +124,9 @@ nav a:focus {
     text-decoration: underline;
 }
 
+/* ============================
+  Footer
+   ============================ */
 
    footer {
     background-color: #000; 

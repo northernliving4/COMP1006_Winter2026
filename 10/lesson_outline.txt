@@ -1,4 +1,3 @@
-
 # Instructor Guide: Teaching Basic User Authentication in PHP
 
 ## Overview
