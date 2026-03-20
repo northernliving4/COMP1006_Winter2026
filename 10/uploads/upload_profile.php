@@ -40,3 +40,17 @@ if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === 0) {
 } else {
     die("No file uploaded.");
 }
+
+
+/*Reflection Questions 
+What is the purpose of the $_FILES superglobal in PHP? 
+- stores information about files uploaded through an HTML form.
+
+Why does a form need special settings to upload files?
+- A form needs special settings so the browser can send file data correctly instead of plain text.
+What function is used to move uploaded files to a folder?
+- The function used is move_uploaded_file().
+Why is it important to control where uploaded files are stored?
+- It’s important to control the storage location to keep the server secure and prevent users from uploading files into unsafe directories.
+
+*/
