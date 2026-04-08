@@ -2,8 +2,7 @@
 // Set the reporting level to show everything (including notices and deprecations)error_reporting(E_ALL);
 // Force the errors to be displayed in the browserini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
-require 'includes/connect.php';
-require 'includes/auth.php';
+require 'config/connect.php';
 require 'includes/header.php';
 
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :uid ORDER BY created_at DESC");

@@ -1,8 +1,8 @@
 <?php
 $host = '172.31.22.43';
-$dbname = 'Matthew200644584';
-$username = 'Matthew200644584';
-$password = "8_UkyOLZqW";
+$dbname = 'team_tracker';
+$username = 'root';
+$password = ""; // XAMPP uses empty password
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
