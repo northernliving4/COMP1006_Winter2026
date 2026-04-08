@@ -1,72 +1,45 @@
 <?php
-require('connect.php');
+require 'includes/connect.php';
+require 'includes/auth.php';
+require 'includes/header.php';
 
-// Fetch all team members
-$query = "SELECT * FROM team_members ORDER BY id DESC";
-$statement = $conn->prepare($query);
-$statement->execute();
-$members = $statement->fetchAll();
+$stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :uid ORDER BY created_at DESC");
+$stmt->execute([':uid' => $_SESSION['user_id']]);
+$tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Team Tracker</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-light">
-
-<div class="container mt-4">
-
-    <h1 class="mb-4 text-center">Team Tracker</h1>
-
-    <?php if (isset($_GET['message']) && $_GET['message'] === 'created'): ?>
-        <div class="alert alert-success">Team member added successfully!</div>
-    <?php endif; ?>
-
-    <div class="mb-3">
-        <a href="create.php" class="btn btn-primary">Add New Member</a>
-    </div>
-
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Team</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php foreach ($members as $member): ?>
-                <tr>
-                    <td><?= $member['id'] ?></td>
-                    <td><?= $member['first_name'] . ' ' . $member['last_name'] ?></td>
-                    <td><?= $member['position'] ?></td>
-                    <td><?= $member['phone'] ?></td>
-                    <td><?= $member['email'] ?></td>
-                    <td><?= $member['team_name'] ?></td>
-                    <td>
-                        <a href="edit.php?id=<?= $member['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="delete.php?id=<?= $member['id'] ?>" class="btn btn-danger btn-sm"
-                           onclick="return confirm('Are you sure you want to delete this member?');">
-                           Delete
-                        </a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-
-    </table>
-
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Your Tasks</h2>
+    <a href="add_task.php" class="btn btn-success">Add Task</a>
 </div>
 
-</body>
-</html>
+<?php if (!$tasks): ?>
+    <div class="alert alert-info">You have no tasks yet.</div>
+<?php else: ?>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Due</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($tasks as $task): ?>
+            <tr>
+                <td><?= htmlspecialchars($task['title']) ?></td>
+                <td><?= htmlspecialchars($task['due_date']) ?></td>
+                <td><?= $task['is_done'] ? 'Done' : 'Pending' ?></td>
+                <td>
+                    <a href="edit_task.php?id=<?= $task['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="delete_task.php?id=<?= $task['id'] ?>" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete this task?');">Delete</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+
+<?php require 'includes/footer.php'; ?>
