@@ -1,4 +1,7 @@
 <?php
+// Set the reporting level to show everything (including notices and deprecations)error_reporting(E_ALL);
+// Force the errors to be displayed in the browserini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 require 'includes/connect.php';
 require 'includes/auth.php';
 require 'includes/header.php';
