@@ -1,5 +1,5 @@
 <?php
-require 'includes/connect.php';
+//require 'config/connect.php';
 session_start();
 
 $errors = [];
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require 'includes/header.php';
+//require 'includes/header.php';
 ?>
 
 <h2>Login</h2>
@@ -50,4 +50,4 @@ require 'includes/header.php';
     <a href="register.php" class="btn btn-link">Create an account</a>
 </form>
 
-<?php require 'includes/footer.php'; ?>
+<?php //require 'includes/footer.php'; ?>

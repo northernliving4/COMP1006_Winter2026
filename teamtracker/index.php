@@ -6,7 +6,7 @@ require 'config/connect.php';
 require 'includes/header.php';
 
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE user_id = :uid ORDER BY created_at DESC");
-$stmt->execute([':uid' => $_SESSION['user_id']]);
+//$stmt->execute([':uid' => $_SESSION['user_id']]);
 $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 

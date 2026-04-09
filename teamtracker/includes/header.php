@@ -19,8 +19,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="profile.php" class="btn btn-outline-light btn-sm me-2">Profile</a>
                 <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
             <?php else: ?>
-                <a href="login.php" class="btn btn-outline-light btn-sm me-2">Login</a>
-                <a href="register.php" class="btn btn-success btn-sm">Register</a>
+                <a href="auth/login.php" class="btn btn-outline-light btn-sm me-2">Login</a>
+                <a href="auth/register.php" class="btn btn-success btn-sm">Register</a>
             <?php endif; ?>
         </div>
     </div>
